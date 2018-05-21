@@ -1,20 +1,10 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:10.1
-      - image: circleci/mongo:3.7.9
+      - image: circleci/mongo:3.6.4
       
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     working_directory: ~/repo
 
     steps:
@@ -52,7 +42,7 @@ jobs:
           command: npm run test:ci
           working_directory: ~/repo/api
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: "test-results/junit/js-test-results.xml"
 
 #      - run:
 #          name: Generate code coverage
@@ -62,13 +52,13 @@ jobs:
       - store_test_results:
           path: test-results
 
-      - store_artifacts:
-          path: test-results
+#      - store_artifacts:
+#         path: coverage
 
 #  test:
 #    docker:
 #      - image: circleci/node:10.1
-#      - image: circleci/mongo:3.7.9
+#      - image: circleci/mongo:3.6.4
 #
 #    working_directory: ~/repo#
 #
