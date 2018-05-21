@@ -12,6 +12,18 @@ npm install
 npm run build
 ```
 
+# Add your environment
+* Use example.env as a base by copying it to development.env and production.env respectively. The default MONGODB_URI and MONGODB_URI_LOCAL work with these instructions.
+```
+#NODE_ENV=production
+SESSION_SECRET=
+FACEBOOK_ID=
+FACEBOOK_SECRET=
+MONGODB_URI=mongodb://mongo:27017/development
+MONGODB_URI_LOCAL=mongodb://mongo:27017/development
+```
+
+
 # Running Chatty API for Development with docker-compose
 ```bash
 cd ..
