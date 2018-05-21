@@ -63,7 +63,7 @@ jobs:
           path: test-results
 
       - store_artifacts:
-          path: coverage
+          path: test-results
 
 #  test:
 #    docker:
