@@ -50,7 +50,7 @@ jobs:
 #          working_directory: ~/repo/api
 
       - store_test_results:
-          path: test-results
+          path: api/test-results
 
 #      - store_artifacts:
 #         path: coverage
