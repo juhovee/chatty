@@ -52,10 +52,10 @@ jobs:
           command: npm test
           working_directory: ~/repo/api
 
-      - run:
-          name: Generate code coverage
-          command: './node_modules/.bin/nyc report --reporter=text-lcov'
-          working_directory: ~/repo/api
+#      - run:
+#          name: Generate code coverage
+#          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+#          working_directory: ~/repo/api
 
       - store_test_results:
           path: test-results
