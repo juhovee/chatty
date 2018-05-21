@@ -49,7 +49,7 @@ jobs:
       
       - run:
           name: Test
-          command: npm run test-ci
+          command: npm run test:ci
           working_directory: ~/repo/api
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
