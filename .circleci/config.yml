@@ -36,7 +36,10 @@ jobs:
           command: npm install
           working_directory: ~/repo/api
 
-      - run: npm run build
+      - run:
+          command: npm run build
+          working_directory: ~/repo/api
+
 
       - save_cache:
           paths:
