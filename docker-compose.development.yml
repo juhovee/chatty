@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  api:
+    image: juhovee/node-starter-api:devel
+    build:
+      context: ./api
+      dockerfile: Dockerfile.development
+    env_file:
+      - development.env
+    volumes:
+      - ./api/src:/app/src
+      - ./api/test:/app/test
+      - ./api/views:/app/views
+    command: npm run watch
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      
+  mongo:
+    image: mongo
+    volumes:
+        - "mongo:/data/db"
+
+volumes:
+  mongo:

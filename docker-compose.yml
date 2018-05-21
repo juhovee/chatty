@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api:
+    build: ./api/
+    image: juhovee/node-starter-api:prod
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    env_file:
+      - production.env
+      
+  mongo:
+    image: mongo
+    volumes:
+        - "mongo:/data/db"
+
+volumes:
+  mongo:
