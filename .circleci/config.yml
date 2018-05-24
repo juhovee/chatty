@@ -69,9 +69,9 @@ jobs:
           name: Build and push a Docker image to Dockerhub
           working_directory: ~/repo/api
           command: |
+            docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t juhovee/chatty-api:$TAG .
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push juhovee/chatty-api:$TAG
 
 workflows:
