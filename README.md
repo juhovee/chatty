@@ -60,3 +60,23 @@ docker run -it --rm --init -u "node" \
     -e "FACEBOOK_SECRET=41860e58c256a3d7ad8267d3c1939a4a" \
     juhovee/chatty-api:prod
 ```
+
+# Continuous Deployment to AWS Elastic Beanstalk with CircleCI and Docker
+Directory .circleci contains files needed to build the project on CircleCI and deploy the Docker images to Docker Hub
+* `config.yml`
+* `circleci.Dockerfile`
+
+## Building the deployment image
+The Docker images used in the CircleCI `build-job` are prebuilt images from CircleCI: `circleci/node:10.1`and `circleci/mongo:3.6.4`.
+
+A different image is used in the `deploy-job`. Node.js is no longer required in this job but Python is in order to install awsebcli for AWS Elastic Beanstalk deployment. Also Docker is preinstalled in the deployment image.
+
+Build and push the image to Docker Hub:
+
+```bash
+cd .circleci
+docker build -t juhovee/chatty-circleci-deploy -f circleci.Dockerfile .
+docker push juhovee/chatty-circleci-deploy:latest
+```
+
+Additionally you need your AWS IAM credentials set in CircleCI as well as `DOCKER_USER` and `DOCKER_PASS` environment variables.

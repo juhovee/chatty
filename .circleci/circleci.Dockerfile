@@ -1,11 +1,7 @@
-FROM circleci/node:10.1
+FROM circleci/python:2.7-jessie
 
-# Update packages and install awsebcli
-RUN sudo apt-get update && sudo apt-get upgrade -y \
-    && sudo apt-get install -y python-pip python-dev --no-install-recommends \
-    && sudo apt-get clean \
-    && sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && sudo pip install awsebcli
+# Install awsebcli
+RUN sudo pip install awsebcli
 
 # Install Docker
 RUN set -x \
