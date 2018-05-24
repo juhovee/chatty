@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-job:
     docker:
       - image: circleci/node:10.1
       - image: circleci/mongo:3.6.4
@@ -44,51 +44,44 @@ jobs:
           environment:
             JEST_JUNIT_OUTPUT: "test-results/junit/js-test-results.xml"
 
-#      - run:
-#          name: Generate code coverage
-#          command: './node_modules/.bin/nyc report --reporter=text-lcov'
-#          working_directory: ~/repo/api
-
       - store_test_results:
           path: api/test-results
 
-#      - store_artifacts:
-#         path: coverage
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - api
 
-#  test:
-#    docker:
-#      - image: circleci/node:10.1
-#      - image: circleci/mongo:3.6.4
-#
-#    working_directory: ~/repo#
-#
-#   steps:
-#      - checkout
-#
-#      - run:
-#          name: Test
-#          command: npm test
-#          working_directory: ~/repo/api
-#
-#      - run:
-#          name: Generate code coverage
-#          command: './node_modules/.bin/nyc report --reporter=text-lcov'
-#          working_directory: ~/repo/api
-#
-#      - store_test_results:
-#          path: test-results
-#
-#      - store_artifacts:
-#          path: coverage
+  deploy-job:
+    docker:
+      - image: juhovee/circleci-node-docker-awsebcli:latest
+    
+    working_directory: ~/repo
+    steps:
+      
+      - setup_remote_docker:
+          docker_layer_caching: true
 
-#workflows:
-#  version: 2
-#  build_and_test:
-#    jobs:
-#      - build
-#      - test:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
+      - attach_workspace:
+          at: ~/repo
+
+      - run:
+          name: Build and push a Docker image to Dockerhub
+          working_directory: ~/repo/api
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t juhovee/chatty-api:$TAG .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push juhovee/chatty-api:$TAG
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build-job
+      - deploy-job:
+          requires:
+            - build-job
+          filters:
+            branches:
+              only: master
