@@ -2,10 +2,10 @@ version: '3'
 
 services:
   api:
-    image: juhovee/node-starter-api:devel
+    image: juhovee/chatty-api:devel
     build:
       context: ./api
-      dockerfile: Dockerfile.development
+      dockerfile: development.Dockerfile
     env_file:
       - development.env
     volumes:
