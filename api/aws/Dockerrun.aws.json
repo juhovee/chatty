@@ -1,0 +1,13 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "_Name": "juhovee/chatty-api:%BUILD_NUM%",
+    "Name": "juhovee/chatty-api:0.1.31",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "3000"
+    }
+  ]
+}

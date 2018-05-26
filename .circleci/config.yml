@@ -66,13 +66,17 @@ jobs:
           at: ~/repo
 
       - run:
-          name: Build and push a Docker image to Dockerhub
+          name: Build and push chatty-api Docker image to Dockerhub
           working_directory: ~/repo/api
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t juhovee/chatty-api:$TAG -t juhovee/chatty-api .
             docker push juhovee/chatty-api:$TAG
+            cd aws
+            sed -i'' -e "s;%BUILD_NUM%;$TAG;g" Dockerrun.aws.json
+            eb init -r eu-west-1 chatty
+            eb deploy -l $TAG
 
 workflows:
   version: 2

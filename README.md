@@ -62,7 +62,7 @@ docker run -it --rm --init -u "node" \
 ```
 
 # Continuous Deployment to AWS Elastic Beanstalk with CircleCI and Docker
-Directory .circleci contains files needed to build the project on CircleCI and deploy the Docker images to Docker Hub
+Directory `.circleci` contains files needed to build the project on CircleCI and deploy the Docker images to Docker Hub
 * `config.yml`
 * `circleci.Dockerfile`
 
